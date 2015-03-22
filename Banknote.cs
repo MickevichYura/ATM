@@ -4,7 +4,10 @@ namespace ATM
 {
     public class Banknote
     {
-        public decimal Nominal { get; set; }
+        public decimal Nominal
+        {
+            get; set;
+        }
 
         public Banknote(decimal nominal)
         {
