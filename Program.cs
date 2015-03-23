@@ -4,9 +4,10 @@ namespace ATM
 {
     public static class Program
     {
+
         private static void Main()
         {
-            var atm = new CashMachine();
+            var atm = new CashMachine(MoneyLoader.LoadMoney());
 
             while (atm.TotalMoney != 0)
             {

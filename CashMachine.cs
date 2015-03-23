@@ -6,7 +6,12 @@ namespace ATM
     public class CashMachine
     {
         private const decimal Sum = 100000;
-        private Money _totalMoney = new Money(Sum);
+        private Money _totalMoney;
+
+        public CashMachine(Money money)
+        {
+            _totalMoney = money;
+        }
 
         public decimal TotalMoney
         {
