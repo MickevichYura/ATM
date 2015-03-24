@@ -7,7 +7,9 @@ namespace ATM
 
         private static void Main()
         {
-            var atm = new CashMachine(MoneyLoader.LoadMoney());
+            var atm = new CashMachine();
+            atm.InsertCassettes(MoneyLoader.LoadMoney());
+            Console.WriteLine(atm.TotalMoney);
 
             while (atm.TotalMoney != 0)
             {
@@ -26,7 +28,6 @@ namespace ATM
                     Console.WriteLine(e.Message);
                 }
             }
-            Console.ReadKey();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace ATM
 
         public override string ToString()
         {
-            return Nominal.ToString(CultureInfo.CurrentCulture);
+            return Nominal.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

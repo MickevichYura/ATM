@@ -14,10 +14,10 @@ namespace ATM
             {
                 while (!reader.EndOfStream)
                 {
-                    var readLine = reader.ReadLine();
-                    if (readLine == null) return new Money();
-                    var bufferForSplit = readLine.Split(' ');
-                    cassettes.Add(new Banknote(decimal.Parse(bufferForSplit[0])), int.Parse(bufferForSplit[1]));
+                    var line = reader.ReadLine();
+                    if (line == null) return new Money();
+                    var casseteInfo = line.Split(' ');
+                    cassettes.Add(new Banknote(decimal.Parse(casseteInfo[0])), int.Parse(casseteInfo[1]));
                 }
             }
             return new Money {Banknotes = cassettes};

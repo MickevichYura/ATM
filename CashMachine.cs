@@ -5,12 +5,11 @@ namespace ATM
 {
     public class CashMachine
     {
-        private const decimal Sum = 100000;
         private Money _totalMoney;
 
-        public CashMachine(Money money)
+        public CashMachine()
         {
-            _totalMoney = money;
+            _totalMoney = new Money();
         }
 
         public decimal TotalMoney
@@ -19,6 +18,11 @@ namespace ATM
             {
                 return _totalMoney.Banknotes.Sum(item => Decimal.Multiply(item.Value, item.Key.Nominal));
             }
+        }
+
+        public void InsertCassettes(Money cassettes)
+        {
+            _totalMoney = cassettes;
         }
 
         public Money WithdrawMoney(decimal requestedSum)
