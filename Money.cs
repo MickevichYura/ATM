@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ATM
 {
@@ -7,6 +9,11 @@ namespace ATM
         public Dictionary<Banknote, int> Banknotes
         {
             get; set;
+        }
+
+        public decimal TotalSum
+        {
+            get { return Banknotes.Sum(item => Decimal.Multiply(item.Value, item.Key.Nominal)); }
         }
 
         public Money()

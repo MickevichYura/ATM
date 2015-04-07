@@ -17,7 +17,7 @@ namespace ATM
                 var readLine = Console.ReadLine();
 
                 decimal requestedSum;
-                if (!decimal.TryParse(readLine, out requestedSum) || requestedSum < Decimal.Zero)
+                if (!decimal.TryParse(readLine, out requestedSum) || requestedSum <= Decimal.Zero)
                 {
                     Console.WriteLine("Wrong input");
                     continue;

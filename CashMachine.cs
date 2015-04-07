@@ -20,7 +20,7 @@ namespace ATM
 
         public decimal TotalMoney
         {
-            get { return _totalMoney.Banknotes.Sum(item => Decimal.Multiply(item.Value, item.Key.Nominal)); }
+            get { return _totalMoney.TotalSum; }
         }
 
         public void InsertCassettes(IEnumerable<Cassette> cassettes)
@@ -30,14 +30,12 @@ namespace ATM
 
         public Money WithdrawMoney(decimal requestedSum)
         {
-            if (TotalMoney < requestedSum)
-            {
-                CurrentState = AtmState.NotEnoughMoney;
-                return new Money();
-            }
-            CurrentState = AtmState.Ok;
-            _totalMoney = new Money(TotalMoney - requestedSum);
-            return new Money(requestedSum);
+            IDecomposable algorithm = new DecompositionAlgorithm();
+            AtmState state;
+            var issuedMoney = new Money(algorithm.DecomposeMoney(_totalMoney.Banknotes, requestedSum, out state));
+            CurrentState = state;
+            _totalMoney = new Money(TotalMoney - issuedMoney.TotalSum);
+            return _totalMoney;
         }
     }
 }
