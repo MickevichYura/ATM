@@ -7,7 +7,11 @@ namespace ATM
     public class CashMachine
     {
         private Money _totalMoney;
-        public AtmState CurrentState;
+
+        public AtmState CurrentState
+        {
+            get; private set;
+        }
 
         public CashMachine()
         {
@@ -19,7 +23,7 @@ namespace ATM
             get { return _totalMoney.Banknotes.Sum(item => Decimal.Multiply(item.Value, item.Key.Nominal)); }
         }
 
-        public void InsertCassettes(List<Cassette> cassettes)
+        public void InsertCassettes(IEnumerable<Cassette> cassettes)
         {
             _totalMoney = new Money(cassettes.ToDictionary(cassete => cassete.Banknote, cassete => cassete.Number));
         }
