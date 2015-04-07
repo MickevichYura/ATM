@@ -15,18 +15,23 @@ namespace ATM
             while (atm.TotalMoney != 0)
             {
                 var readLine = Console.ReadLine();
-                if (readLine == null) continue;
-                try
+
+                decimal requestedSum;
+                if (!decimal.TryParse(readLine, out requestedSum) || requestedSum < Decimal.Zero)
                 {
-                    var money = atm.WithdrawMoney(decimal.Parse(readLine));
-                    if (money != null)
-                        Console.WriteLine(money);
-                    else
-                        Console.WriteLine("No such money");
+                    Console.WriteLine("Wrong input");
+                    continue;
                 }
-                catch (Exception e)
+
+                var money = atm.WithdrawMoney(requestedSum);
+                switch (atm.CurrentState)
                 {
-                    Console.WriteLine(e.Message);
+                    case AtmState.Ok:
+                        Console.WriteLine(money);
+                        break;
+                    default:
+                        Console.WriteLine(atm.CurrentState);
+                        break;
                 }
             }
         }

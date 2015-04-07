@@ -7,6 +7,7 @@ namespace ATM
     public class CashMachine
     {
         private Money _totalMoney;
+        public AtmState CurrentState;
 
         public CashMachine()
         {
@@ -15,10 +16,7 @@ namespace ATM
 
         public decimal TotalMoney
         {
-            get
-            {
-                return _totalMoney.Banknotes.Sum(item => Decimal.Multiply(item.Value, item.Key.Nominal));
-            }
+            get { return _totalMoney.Banknotes.Sum(item => Decimal.Multiply(item.Value, item.Key.Nominal)); }
         }
 
         public void InsertCassettes(List<Cassette> cassettes)
@@ -28,7 +26,12 @@ namespace ATM
 
         public Money WithdrawMoney(decimal requestedSum)
         {
-            if (TotalMoney < requestedSum) return null;
+            if (TotalMoney < requestedSum)
+            {
+                CurrentState = AtmState.NotEnoughMoney;
+                return new Money();
+            }
+            CurrentState = AtmState.Ok;
             _totalMoney = new Money(TotalMoney - requestedSum);
             return new Money(requestedSum);
         }
