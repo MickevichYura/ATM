@@ -6,7 +6,7 @@ namespace ATM
     {
         public decimal Nominal
         {
-            get; set;
+            get; private set;
         }
 
         public Banknote(decimal nominal)
@@ -16,7 +16,7 @@ namespace ATM
 
         public override string ToString()
         {
-            return Nominal.ToString(CultureInfo.InvariantCulture);
+            return Nominal.ToString(CultureInfo.CurrentCulture);
         }
     }
 }

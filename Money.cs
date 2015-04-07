@@ -19,6 +19,11 @@ namespace ATM
             Banknotes = new Dictionary<Banknote, int> {{new Banknote(requestedSum), 1}};
         }
 
+        public Money(Dictionary<Banknote, int> money)
+        {
+            Banknotes = money;
+        }
+
         public override string ToString()
         {
             return string.Join("\n", Banknotes);

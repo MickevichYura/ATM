@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ATM
@@ -20,9 +21,9 @@ namespace ATM
             }
         }
 
-        public void InsertCassettes(Money cassettes)
+        public void InsertCassettes(List<Cassette> cassettes)
         {
-            _totalMoney = cassettes;
+            _totalMoney = new Money(cassettes.ToDictionary(cassete => cassete.Banknote, cassete => cassete.Number));
         }
 
         public Money WithdrawMoney(decimal requestedSum)

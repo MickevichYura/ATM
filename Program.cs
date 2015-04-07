@@ -4,11 +4,12 @@ namespace ATM
 {
     public static class Program
     {
+        private const string Path = "money.txt";
 
         private static void Main()
         {
             var atm = new CashMachine();
-            atm.InsertCassettes(MoneyLoader.LoadMoney());
+            atm.InsertCassettes(CasseteReader.ReadCassete(Path));
             Console.WriteLine(atm.TotalMoney);
 
             while (atm.TotalMoney != 0)
