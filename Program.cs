@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Configuration;
+using log4net;
 
 namespace ATM
 {
     public static class Program
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
         private static void Main()
         {
+            Log.Info(DateTime.Now);
             var atm = new CashMachine();
             atm.InsertCassettes(CassetteReader.ReadCassette(ConfigurationManager.AppSettings["Path"]));
 

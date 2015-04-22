@@ -33,7 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>bin\log4net\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,7 +50,7 @@
     <Compile Include="Banknote.cs" />
     <Compile Include="CashMachine.cs" />
     <Compile Include="Cassette.cs" />
-    <Compile Include="CasseteReader.cs" />
+    <Compile Include="CassetteReader.cs" />
     <Compile Include="IDecomposable.cs" />
     <Compile Include="Money.cs" />
     <Compile Include="DecompositionAlgorithm.cs" />
