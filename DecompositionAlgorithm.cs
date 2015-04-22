@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace ATM
@@ -20,7 +19,7 @@ namespace ATM
 
         private static decimal TotalMoney(Dictionary<Banknote, int> money)
         {
-            return money.Sum(item => Decimal.Multiply(item.Value, item.Key.Nominal));
+            return money.Sum(item => decimal.Multiply(item.Value, item.Key.Nominal));
         }
     }
 }
