@@ -1,16 +1,22 @@
-﻿namespace ATM
+﻿using System.Runtime.Serialization;
+
+namespace ATM
 {
+    [DataContract]
     public class Cassette
     {
-        public Banknote Banknote
+        [DataMember]
+        public int Number
         {
             get;
             private set;
         }
 
-        public int Number
+        [DataMember]
+        public Banknote Banknote
         {
-            get; private set;
+            get;
+            private set;
         }
         
         public Cassette(Banknote banknote, int number)

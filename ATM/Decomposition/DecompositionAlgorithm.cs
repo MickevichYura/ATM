@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ATM
+namespace ATM.Decomposition
 {
-    internal class DecompositionAlgorithm : IDecomposable
+    public class DecompositionAlgorithm : IDecomposable
     {
         Dictionary<Banknote, int> IDecomposable.DecomposeMoney(Dictionary<Banknote, int> money, decimal requestedSum,
             out AtmState state)

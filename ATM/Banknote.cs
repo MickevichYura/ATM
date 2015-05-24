@@ -1,9 +1,12 @@
 ﻿using System.Globalization;
+using System.Runtime.Serialization;
 
 namespace ATM
 {
+    [DataContract]
     public class Banknote
     {
+        [DataMember]
         public decimal Nominal
         {
             get; private set;
