@@ -4,16 +4,21 @@ using System.Configuration;
 using ATM.Reader;
 using ATM.Writer;
 using log4net;
+using log4net.Config;
 
 namespace ATM
 {
+
     public static class Program
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(CashMachine));
+        public static readonly ILog Log = LogManager.GetLogger(typeof(Program));
 
+        [STAThread]
         private static void Main()
         {
-            Log.Info(DateTime.Now);
+            XmlConfigurator.Configure();
+            Log.Debug("start");
+
             var atm = new CashMachine();
             ICassetteReader<List<Cassette>> cassetteReader = new TxtCassetteReader();
             List<Cassette> cassettes = cassetteReader.ReadCassettes(ConfigurationManager.AppSettings["PathToMoneyTxt"]);
