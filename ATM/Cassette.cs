@@ -18,16 +18,16 @@ namespace ATM
             get;
             private set;
         }
+
+        public decimal TotalMoney
+        {
+            get { return Banknote.Nominal * Number; }
+        }
         
         public Cassette(Banknote banknote, int number)
         {
             Number = number;
             Banknote = banknote;
-        }
-
-        public void Erase(int number)
-        {
-            Number -= number;
         }
 
     }

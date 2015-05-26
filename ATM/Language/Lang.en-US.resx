@@ -120,11 +120,17 @@
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="ImpossibleToCollectMoney" xml:space="preserve">
+    <value>It is impossible to withdraw a sum</value>
+  </data>
   <data name="NotEnoughMoney" xml:space="preserve">
     <value>Not Enough Money</value>
   </data>
-  <data name="TooManyBills" xml:space="preserve">
-    <value>Too Many Bills</value>
+  <data name="Ok" xml:space="preserve">
+    <value>Your money</value>
+  </data>
+  <data name="TooManyBanknotes" xml:space="preserve">
+    <value>Too Many Banknotes</value>
   </data>
   <data name="WrongInput" xml:space="preserve">
     <value>Wrong Input</value>

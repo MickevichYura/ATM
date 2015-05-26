@@ -120,11 +120,17 @@
   <data name="Exit" xml:space="preserve">
     <value>Выход</value>
   </data>
+  <data name="ImpossibleToCollectMoney" xml:space="preserve">
+    <value>Невозможно собрать заданную сумму</value>
+  </data>
   <data name="NotEnoughMoney" xml:space="preserve">
     <value>Недосточно денег в банкомате</value>
   </data>
-  <data name="TooManyBills" xml:space="preserve">
-    <value>Слишком много купюр для вывода</value>
+  <data name="Ok" xml:space="preserve">
+    <value>Ваши деньги</value>
+  </data>
+  <data name="TooManyBanknotes" xml:space="preserve">
+    <value>Слишком много купюр для выдачи</value>
   </data>
   <data name="WrongInput" xml:space="preserve">
     <value>Неправильный ввод</value>
