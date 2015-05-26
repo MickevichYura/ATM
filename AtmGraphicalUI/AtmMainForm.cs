@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
+using System.Resources;
+using System.Threading;
 using System.Windows.Forms;
 using ATM;
 using ATM.Language;
@@ -18,6 +21,18 @@ namespace AtmConsoleUI
             XmlConfigurator.Configure();
 
             _languagePack = new LanguagePack("ru-RU");
+            LoadLang();
+        }
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof (AtmMainForm));
+        private Dictionary<AtmState, string> _statesDictionary;
+
+        private CashMachine _atm;
+        private ILanguage _languagePack;
+        private ICassetteReader<List<Cassette>> _cassetteReader;
+
+        private void LoadLang()
+        {
             _statesDictionary = new Dictionary<AtmState, string>()
             {
                 {AtmState.Ok, _languagePack.Ok},
@@ -26,13 +41,6 @@ namespace AtmConsoleUI
                 {AtmState.TooManyBanknotes, _languagePack.TooManyBanknotes}
             };
         }
-
-        private static readonly ILog Log = LogManager.GetLogger(typeof(AtmMainForm));
-        private readonly Dictionary<AtmState, string> _statesDictionary;
-
-        private CashMachine _atm;
-        private ILanguage _languagePack;
-        private ICassetteReader<List<Cassette>> _cassetteReader;
 
         private void AtmMainForm_Load(object sender, EventArgs e)
         {
@@ -72,16 +80,17 @@ namespace AtmConsoleUI
             switch (_atm.CurrentState)
             {
                 case AtmState.Ok:
+                {
+                    Log.Info(string.Format("State:{1}: {0}", MoneyConverter.ConvertToString(money),
+                        _statesDictionary[_atm.CurrentState]));
+                    listBoxMoney.Items.Clear();
+                    foreach (var nominal in _atm.AllMoney.Banknotes)
                     {
-                        Log.Info(string.Format("State:{1}: {0}", MoneyConverter.ConvertToString(money), _statesDictionary[_atm.CurrentState]));
-                        listBoxMoney.Items.Clear();
-                        foreach (var nominal in _atm.AllMoney.Banknotes)
-                        {
-                            listBoxMoney.Items.Add(string.Format("Banknote: {0} " + " Amount: {1}", nominal.Key.Nominal,
-                                nominal.Value));
-                        }
-                        break;
+                        listBoxMoney.Items.Add(string.Format("Banknote: {0} " + " Amount: {1}", nominal.Key.Nominal,
+                            nominal.Value));
                     }
+                    break;
+                }
 
                 default:
                 {
@@ -110,7 +119,8 @@ namespace AtmConsoleUI
                 pathToMoney += userInput;
                 List<Cassette> cassettes = _cassetteReader.ReadCassettes(ConfigurationManager.AppSettings[pathToMoney]);
                 _atm.InsertCassettes(cassettes);
-                Log.Info(string.Format("Cassettes are loaded successfully from \"{0}\"", ConfigurationManager.AppSettings[pathToMoney]));
+                Log.Info(string.Format("Cassettes are loaded successfully from \"{0}\"",
+                    ConfigurationManager.AppSettings[pathToMoney]));
             }
             catch (KeyNotFoundException)
             {
@@ -121,7 +131,8 @@ namespace AtmConsoleUI
             {
                 foreach (var nominal in _atm.AllMoney.Banknotes)
                 {
-                    listBoxMoney.Items.Add(string.Format("Banknote: {0}  " + "Amount: {1}", nominal.Key.Nominal, nominal.Value));
+                    listBoxMoney.Items.Add(string.Format("Banknote: {0}  " + "Amount: {1}", nominal.Key.Nominal,
+                        nominal.Value));
                 }
             }
         }
@@ -136,6 +147,18 @@ namespace AtmConsoleUI
             _atm.DeleteCassettes();
             listBoxMoney.Items.Clear();
             Log.Info("Cassettes are deleted");
+        }
+
+        private void buttonLang_Click(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                string cultureInfo = button.Text;
+                _languagePack = new LanguagePack(cultureInfo);
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(cultureInfo);
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(cultureInfo);
+            }
         }
     }
 }

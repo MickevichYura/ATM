@@ -48,6 +48,8 @@
             this.buttonDeleteCassettes = new System.Windows.Forms.Button();
             this.panelInsertCassettes = new System.Windows.Forms.Panel();
             this.listBoxMoney = new System.Windows.Forms.ListBox();
+            this.buttonLangRu = new System.Windows.Forms.Button();
+            this.buttonLangEn = new System.Windows.Forms.Button();
             this.panelInput.SuspendLayout();
             this.panelInsertCassettes.SuspendLayout();
             this.SuspendLayout();
@@ -258,11 +260,35 @@
             this.listBoxMoney.Size = new System.Drawing.Size(220, 84);
             this.listBoxMoney.TabIndex = 17;
             // 
+            // buttonLangRu
+            // 
+            this.buttonLangRu.Location = new System.Drawing.Point(311, 221);
+            this.buttonLangRu.Name = "buttonLangRu";
+            this.buttonLangRu.Size = new System.Drawing.Size(90, 50);
+            this.buttonLangRu.TabIndex = 18;
+            this.buttonLangRu.Tag = "";
+            this.buttonLangRu.Text = "ru-RU";
+            this.buttonLangRu.UseVisualStyleBackColor = true;
+            this.buttonLangRu.Click += new System.EventHandler(this.buttonLang_Click);
+            // 
+            // buttonLangEn
+            // 
+            this.buttonLangEn.Location = new System.Drawing.Point(421, 221);
+            this.buttonLangEn.Name = "buttonLangEn";
+            this.buttonLangEn.Size = new System.Drawing.Size(90, 50);
+            this.buttonLangEn.TabIndex = 19;
+            this.buttonLangEn.Tag = "";
+            this.buttonLangEn.Text = "en-US";
+            this.buttonLangEn.UseVisualStyleBackColor = true;
+            this.buttonLangEn.Click += new System.EventHandler(this.buttonLang_Click);
+            // 
             // AtmMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 296);
+            this.ClientSize = new System.Drawing.Size(522, 287);
+            this.Controls.Add(this.buttonLangEn);
+            this.Controls.Add(this.buttonLangRu);
             this.Controls.Add(this.listBoxMoney);
             this.Controls.Add(this.panelInsertCassettes);
             this.Controls.Add(this.panelInput);
@@ -302,6 +328,8 @@
         private System.Windows.Forms.Button buttonDeleteCassettes;
         private System.Windows.Forms.Panel panelInsertCassettes;
         private System.Windows.Forms.ListBox listBoxMoney;
+        private System.Windows.Forms.Button buttonLangRu;
+        private System.Windows.Forms.Button buttonLangEn;
     }
 }
 
