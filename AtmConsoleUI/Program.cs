@@ -32,18 +32,9 @@ namespace AtmConsoleUI
             };
 
             CashMachine atm = new CashMachine();
-            ICassetteReader<List<Cassette>> cassetteReader = new TxtCassetteReader();
-            List<Cassette> cassettes = cassetteReader.ReadCassettes(ConfigurationManager.AppSettings["PathToMoneyTxt"]);
-
-            cassetteReader = new XmlCassetteReader<List<Cassette>>();
-            cassettes = cassetteReader.ReadCassettes(ConfigurationManager.AppSettings["PathToMoneyXml"]);
-
-            cassetteReader = new JsonCassetteReader<List<Cassette>>();
-            cassettes = cassetteReader.ReadCassettes(ConfigurationManager.AppSettings["PathToMoneyJson"]);
-
-            cassetteReader = new CsvCassetteReader();
-            cassettes = cassetteReader.ReadCassettes(ConfigurationManager.AppSettings["PathToMoneyCsv"]);
-
+            string extension = "Xml";
+            ICassetteReader<List<Cassette>> cassetteReader = ReadersCollection.CassetteReaders[extension];
+            List<Cassette> cassettes = cassetteReader.ReadCassettes(ConfigurationManager.AppSettings["PathToMoney" + extension]);
             atm.InsertCassettes(cassettes);
 
             while (atm.TotalMoney != 0)
@@ -67,29 +58,23 @@ namespace AtmConsoleUI
                 switch (atm.CurrentState)
                 {
                     case AtmState.Ok:
-                        Console.WriteLine(money);
+                    {
+                        Console.WriteLine(MoneyConverter.ConvertToString(money));
                         break;
+                    }
                     default:
                         Console.WriteLine(statesDictionary[atm.CurrentState]);
                         break;
                 }
             }
 
-
             List<Cassette> newCassettes =
                 atm.AllMoney.Banknotes.Select(cassette => new Cassette(cassette.Key, cassette.Value)).ToList();
 
-            ICassetteWriter<List<Cassette>> cassetteWriter = new XmlCassetteWriter<List<Cassette>>();
-            cassetteWriter.WriteCassettes(newCassettes, ConfigurationManager.AppSettings["PathToMoneyXml"]);
-
-            cassetteWriter = new JsonCassetteWriter<List<Cassette>>();
-            cassetteWriter.WriteCassettes(newCassettes, ConfigurationManager.AppSettings["PathToMoneyJson"]);
-
-            cassetteWriter = new CsvCassetteWriter<List<Cassette>>();
-            cassetteWriter.WriteCassettes(newCassettes, ConfigurationManager.AppSettings["PathToMoneyCsv"]);
-
-            cassetteWriter = new TxtCassetteWriter();
-            cassetteWriter.WriteCassettes(newCassettes, ConfigurationManager.AppSettings["PathToMoneyTxt"]);
+            foreach (var cassetteWriter in WritersCollection.CassetteWriters)
+            {
+                cassetteWriter.Value.WriteCassettes(newCassettes, ConfigurationManager.AppSettings["PathToMoney" + cassetteWriter.Key]);
+            }
         }
        
     }

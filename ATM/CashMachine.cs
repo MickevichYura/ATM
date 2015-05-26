@@ -30,6 +30,11 @@ namespace ATM
 
         }
 
+        public void DeleteCassettes()
+        {
+            AllMoney = new Money();
+        }
+
         public Money WithdrawMoney(decimal requestedSum)
         {
             IDecomposable algorithm = new DecompositionAlgorithm();
@@ -40,7 +45,7 @@ namespace ATM
             if (CurrentState == AtmState.Ok)
             {
                 UpdateMoney(issuedMoney);
-            }          
+            }
 
             return issuedMoney;
         }

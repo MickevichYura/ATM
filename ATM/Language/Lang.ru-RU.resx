@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Exit" xml:space="preserve">
-    <value>Выход</value>
+    <value>выход</value>
   </data>
   <data name="ImpossibleToCollectMoney" xml:space="preserve">
-    <value>Невозможно собрать заданную сумму</value>
+    <value>невозможно собрать заданную сумму</value>
   </data>
   <data name="NotEnoughMoney" xml:space="preserve">
-    <value>Недосточно денег в банкомате</value>
+    <value>недостаточно денег в банкомате</value>
   </data>
   <data name="Ok" xml:space="preserve">
-    <value>Ваши деньги</value>
+    <value>успешно. ваши деньги</value>
   </data>
   <data name="TooManyBanknotes" xml:space="preserve">
-    <value>Слишком много купюр для выдачи</value>
+    <value>слишком много купюр для выдачи</value>
   </data>
   <data name="WrongInput" xml:space="preserve">
-    <value>Неправильный ввод</value>
+    <value>неправильный ввод</value>
   </data>
 </root>
