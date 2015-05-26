@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using ATM;
 using ATM.Reader;
 using ATM.Writer;
 using log4net;
 using log4net.Config;
 
-namespace ATM
+namespace AtmConsoleUI
 {
 
     public static class Program
     {
         public static readonly ILog Log = LogManager.GetLogger(typeof(Program));
 
-        [STAThread]
         private static void Main()
         {
             XmlConfigurator.Configure();
             Log.Debug("start");
-
-            var atm = new CashMachine();
+            
+            CashMachine atm = new CashMachine();
             ICassetteReader<List<Cassette>> cassetteReader = new TxtCassetteReader();
             List<Cassette> cassettes = cassetteReader.ReadCassettes(ConfigurationManager.AppSettings["PathToMoneyTxt"]);
 
