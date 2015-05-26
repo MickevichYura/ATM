@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using ATM;
+using ATM.Language;
 using ATM.Reader;
 using ATM.Writer;
 using log4net;
@@ -18,7 +19,8 @@ namespace AtmConsoleUI
         {
             XmlConfigurator.Configure();
             Log.Debug("start");
-            
+            ILanguage languagePack = new LanguagePack("en-US");
+
             CashMachine atm = new CashMachine();
             ICassetteReader<List<Cassette>> cassetteReader = new TxtCassetteReader();
             List<Cassette> cassettes = cassetteReader.ReadCassettes(ConfigurationManager.AppSettings["PathToMoneyTxt"]);
@@ -53,7 +55,7 @@ namespace AtmConsoleUI
                 decimal requestedSum;
                 if (!decimal.TryParse(readLine, out requestedSum) || requestedSum <= decimal.Zero)
                 {
-                    Console.WriteLine(@"Wrong input");
+                    Console.WriteLine(languagePack.WrongInput);
                     continue;
                 }
 
