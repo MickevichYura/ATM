@@ -20,8 +20,8 @@ namespace AtmConsoleUI
         {
             XmlConfigurator.Configure();
             Log.Debug("start");
-            //ILanguage languagePack = new LanguagePack("en-US");
-            ILanguage languagePack = new LanguagePack("ru-RU");
+            ILanguage languagePack = new LanguagePack("en-US");
+           // ILanguage languagePack = new LanguagePack("ru-RU");
 
             Dictionary<AtmState, string> statesDictionary = new Dictionary<AtmState, string>() 
             { 
@@ -45,7 +45,7 @@ namespace AtmConsoleUI
                 decimal requestedSum;
                 if (!decimal.TryParse(readLine, out requestedSum) || requestedSum <= decimal.Zero)
                 {
-                    if (readLine.Equals(languagePack.Exit, StringComparison.OrdinalIgnoreCase))
+                    if (readLine.Equals("exit", StringComparison.OrdinalIgnoreCase))
                     {
                         break;
                     }

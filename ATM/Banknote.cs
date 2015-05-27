@@ -1,8 +1,10 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace ATM
 {
+    [Serializable]
     [DataContract]
     public class Banknote
     {

@@ -19,7 +19,6 @@ namespace AtmConsoleUI
         {
             InitializeComponent();
             XmlConfigurator.Configure();
-
             _languagePack = new LanguagePack("ru-RU");
             LoadLang();
         }
@@ -42,10 +41,20 @@ namespace AtmConsoleUI
             };
         }
 
+        private void DisplayMoney()
+        {
+            foreach (var nominal in _atm.AllMoney.Banknotes)
+            {
+                listBoxMoney.Items.Add(string.Format("Banknote: {0}  " + "Amount: {1}", nominal.Key.Nominal,
+                    nominal.Value));
+            }
+        }
+
         private void AtmMainForm_Load(object sender, EventArgs e)
         {
             Log.Debug("Start application");
-            _atm = new CashMachine();
+            _atm = CashMachine.Deserialize(ConfigurationManager.AppSettings["SerializationFile"]) ?? new CashMachine();
+            DisplayMoney();
         }
 
         private void buttonNumber_Click(object sender, EventArgs e)
@@ -85,10 +94,7 @@ namespace AtmConsoleUI
                         _statesDictionary[_atm.CurrentState]));
                     listBoxMoney.Items.Clear();
                     foreach (var nominal in _atm.AllMoney.Banknotes)
-                    {
-                        listBoxMoney.Items.Add(string.Format("Banknote: {0} " + " Amount: {1}", nominal.Key.Nominal,
-                            nominal.Value));
-                    }
+                        DisplayMoney();
                     break;
                 }
 
@@ -129,11 +135,7 @@ namespace AtmConsoleUI
             }
             if (isLoaded)
             {
-                foreach (var nominal in _atm.AllMoney.Banknotes)
-                {
-                    listBoxMoney.Items.Add(string.Format("Banknote: {0}  " + "Amount: {1}", nominal.Key.Nominal,
-                        nominal.Value));
-                }
+                DisplayMoney();
             }
         }
 
@@ -159,6 +161,11 @@ namespace AtmConsoleUI
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(cultureInfo);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(cultureInfo);
             }
+        }
+
+        private void AtmMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _atm.Serialize(ConfigurationManager.AppSettings["SerializationFile"]);
         }
     }
 }

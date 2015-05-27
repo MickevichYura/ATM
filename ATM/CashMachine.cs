@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using ATM.Decomposition;
 
 namespace ATM
 {
+    [Serializable]
     public class CashMachine
     {
         public Money AllMoney { get; private set; }
@@ -56,6 +59,33 @@ namespace ATM
             {
                 AllMoney.Banknotes[pair.Key] -= pair.Value;
             }
+        }
+
+        public void Serialize(string fileName)
+        {
+            Stream testFileStream = File.Create(fileName);
+            var serializer = new BinaryFormatter();
+            serializer.Serialize(testFileStream, this);
+            testFileStream.Close();
+        }
+
+        public static CashMachine Deserialize(string fileName)
+        {
+            Stream stream = Stream.Null;
+            try
+            {
+                stream = File.OpenRead(fileName);
+                var deserializer = new BinaryFormatter();
+                var cashMachine = (CashMachine) deserializer.Deserialize(stream);
+                stream.Close();
+                return cashMachine;
+            }
+            catch (Exception)
+            {
+                stream.Close();
+                return null;
+            }
+
         }
     }
 }
