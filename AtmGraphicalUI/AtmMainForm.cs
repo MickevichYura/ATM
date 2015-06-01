@@ -77,7 +77,6 @@ namespace AtmConsoleUI
         private void buttonEnter_Click(object sender, EventArgs e)
         {
             var readLine = textBoxInputSum.Text;
-            Log.Info(string.Format("User required sum {0}", readLine));
 
             decimal requestedSum;
             if (!decimal.TryParse(readLine, out requestedSum) || requestedSum <= decimal.Zero)
@@ -110,7 +109,6 @@ namespace AtmConsoleUI
         private void buttonLoadCassettes_Click(object sender, EventArgs e)
         {
             listBoxMoney.Items.Clear();
-            Log.Info("Start loading cassettes");
             string pathToMoney = "PathToMoney";
 
             string userInput = textBoxCassettes.Text.ToLower().Trim();
@@ -124,9 +122,9 @@ namespace AtmConsoleUI
                 _cassetteReader = ReadersCollection.CassetteReaders[userInput];
                 pathToMoney += userInput;
                 List<Cassette> cassettes = _cassetteReader.ReadCassettes(ConfigurationManager.AppSettings[pathToMoney]);
-                _atm.InsertCassettes(cassettes);
                 Log.Info(string.Format("Cassettes are loaded successfully from \"{0}\"",
                     ConfigurationManager.AppSettings[pathToMoney]));
+                _atm.InsertCassettes(cassettes);
             }
             catch (KeyNotFoundException)
             {
@@ -148,7 +146,6 @@ namespace AtmConsoleUI
         {
             _atm.DeleteCassettes();
             listBoxMoney.Items.Clear();
-            Log.Info("Cassettes are deleted");
         }
 
         private void buttonLang_Click(object sender, EventArgs e)
