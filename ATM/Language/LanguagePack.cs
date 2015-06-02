@@ -18,6 +18,7 @@ namespace ATM.Language
         public string Cancel { get; set; }
         public string Clear { get; set; }
         public string Enter { get; set; }
+        public string Help { get; set; }
 
         public LanguagePack(string cultureInfo)
         {
@@ -36,6 +37,7 @@ namespace ATM.Language
             Cancel = resourceManager.GetString("Cancel", culture);
             Clear = resourceManager.GetString("Clear", culture);
             Enter = resourceManager.GetString("Enter", culture);
+            Help = resourceManager.GetString("Help", culture);
         }
 
     }

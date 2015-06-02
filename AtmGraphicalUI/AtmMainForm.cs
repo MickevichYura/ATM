@@ -55,21 +55,17 @@ namespace AtmConsoleUI
 
         }
 
-        private void DisplayMoney()
+        private void DisplayMoney(Money money)
         {
             listBoxMoney.Items.Clear();
-            foreach (var nominal in _atm.AllMoney.Banknotes)
-            {
-                listBoxMoney.Items.Add(string.Format("Banknote: {0}  " + "Amount: {1}", nominal.Key.Nominal,
-                    nominal.Value));
-            }
+            listBoxMoney.Items.AddRange(MoneyConverter.ConvertToListBox(money));
         }
 
         private void AtmMainForm_Load(object sender, EventArgs e)
         {
             Log.Debug("Start application");
             _atm = CashMachine.Deserialize(ConfigurationManager.AppSettings["SerializationFile"]) ?? new CashMachine();
-            DisplayMoney();
+            DisplayMoney(_atm.AllMoney);
         }
 
         private void buttonNumber_Click(object sender, EventArgs e)
@@ -103,9 +99,8 @@ namespace AtmConsoleUI
             {
                 case AtmState.Ok:
                 {
-                    DisplayMoney();
-                    //MoneyConverter.ConvertToString(issuedMoney)
-                    //MessageBox.Show(money.ToString());
+                    DisplayMoney(_atm.AllMoney);
+                    new IssuedMoneyForm(MoneyConverter.ConvertToDictionary(money)).ShowDialog();
                     break;
                 }
 
@@ -132,7 +127,7 @@ namespace AtmConsoleUI
                 {
                     _atm.InsertCassettes(cassettes);
                 }
-                DisplayMoney();
+                DisplayMoney(_atm.AllMoney);
             }
         }
 

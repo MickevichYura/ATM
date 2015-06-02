@@ -13,5 +13,6 @@
         string Cancel { get; set; }
         string Clear { get; set; }
         string Enter { get; set; }
+        string Help { get; set; }
     }
 }

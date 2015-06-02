@@ -20,7 +20,7 @@ namespace AtmConsoleUI
             XmlConfigurator.Configure();
             Log.Debug("start");
             ILanguage languagePack = new LanguagePack("en-US");
-           // ILanguage languagePack = new LanguagePack("ru-RU");
+            //ILanguage languagePack = new LanguagePack("ru-RU");
 
             Dictionary<AtmState, string> statesDictionary = new Dictionary<AtmState, string>() 
             { 
@@ -33,6 +33,7 @@ namespace AtmConsoleUI
             _atm = CashMachine.Deserialize(ConfigurationManager.AppSettings["SerializationFile"]) ?? new CashMachine();
 
             CommandPerformer commandPerformer = new CommandPerformer(ref _atm, ref languagePack);
+            commandPerformer.TryPerform("help");
 
             while (true)
             {

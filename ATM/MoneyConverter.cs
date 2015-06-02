@@ -14,7 +14,7 @@ namespace ATM
             foreach (KeyValuePair<Banknote, int> pair in money.Banknotes)
             {
                 if (pair.Value != 0)
-                    moneyStringRepresentation.AppendFormat("{0} - {1};{2}", pair.Key.Nominal, pair.Value, Environment.NewLine);
+                    moneyStringRepresentation.AppendFormat("{0} - {1}; ", pair.Key.Nominal, pair.Value);
             }
 
             return moneyStringRepresentation.ToString();

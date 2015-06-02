@@ -130,7 +130,10 @@
     <value>Ввод</value>
   </data>
   <data name="Exit" xml:space="preserve">
-    <value>выход</value>
+    <value>Выход</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Помощь</value>
   </data>
   <data name="ImpossibleToCollectMoney" xml:space="preserve">
     <value>невозможно собрать заданную сумму</value>

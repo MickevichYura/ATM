@@ -51,25 +51,19 @@ namespace AtmConsoleUI
             if (command == "delete")
             {
                 _atm.DeleteCassettes();
-                Console.WriteLine("\nСassettes have been successfully removed\n");
                 return true;
             }
 
             if (command == "help")
             {
-                Console.WriteLine('\n' + "allCommands" + '\n' +
-                                  "help" + "                     " + "help" + '\n' +
-                                  "exit" + "                     " + _lang.Exit + '\n' +
-                                  "insert" + "                   " + _lang.InsertCassettes + '\n' +
-                                  "delete" + "                   " + _lang.DeleteCassettes + '\n' +
-                                  "clear" + "                    " + _lang.Clear + '\n'
+                Console.WriteLine('\n' +
+                                  "help" + "\t" + _lang.Help + '\n' +
+                                  "exit" + "\t" + _lang.Exit + '\n' +
+                                  "insert" + "\t" + _lang.InsertCassettes + '\n' +
+                                  "delete" + "\t" + _lang.DeleteCassettes + '\n' +
+                                  "clear" + "\t" + _lang.Clear + '\n'
                     );
-                return true;
-            }
 
-            if (command == "clear")
-            {
-                Console.Clear();
                 return true;
             }
 

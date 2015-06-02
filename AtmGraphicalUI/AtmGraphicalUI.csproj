@@ -57,11 +57,20 @@
     <Compile Include="AtmMainForm.Designer.cs">
       <DependentUpon>AtmMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IssuedMoneyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IssuedMoneyForm.Designer.cs">
+      <DependentUpon>IssuedMoneyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MoneyConverter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AtmMainForm.resx">
       <DependentUpon>AtmMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IssuedMoneyForm.resx">
+      <DependentUpon>IssuedMoneyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
