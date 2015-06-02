@@ -6,10 +6,10 @@ namespace ATM.Reader
 {
     public class CsvCassetteReader : ICassetteReader<List<Cassette>>
     {
-        public List<Cassette> ReadCassettes(string fileName)
+        public List<Cassette> LoadCassettes(string filename)
         {
             List<Cassette> list = new List<Cassette>();
-            var stream = new StreamReader(new FileStream(fileName, FileMode.Open));
+            var stream = new StreamReader(new FileStream(filename, FileMode.Open));
 
             stream.ReadLine();
             while (!stream.EndOfStream)

@@ -5,11 +5,11 @@ namespace ATM.Reader
 {
     public class TxtCassetteReader : ICassetteReader<List<Cassette>>
     {
-        public List<Cassette> ReadCassettes(string path)
+        public List<Cassette> LoadCassettes(string filename)
         {
             var moneyCassettes = new List<Cassette>();
 
-            using (var reader = new StreamReader(path))
+            using (var reader = new StreamReader(filename))
             {
                 while (!reader.EndOfStream)
                 {

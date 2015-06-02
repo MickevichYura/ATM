@@ -100,10 +100,10 @@ namespace ATM
                 Log.Info(string.Format("Deserialization from {0} was successfull", filename));
                 return cashMachine;
             }
-            catch (FileNotFoundException e)
+            catch (Exception e)
             {
                 fileStream.Close();
-                Log.Error(string.Format("Error in deserialization from {0}.\n{1}", e.FileName, e.Message));
+                Log.Error(string.Format("Error in deserialization from {0}.\n{1}", filename, e.Message));
                 return null;
             }
 

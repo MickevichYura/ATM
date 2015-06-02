@@ -2,6 +2,6 @@
 {
     public interface ICassetteReader<out T>
     {
-        T ReadCassettes(string filename);
+        T LoadCassettes(string filename);
     }
 }

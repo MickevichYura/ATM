@@ -32,9 +32,10 @@ namespace AtmConsoleUI
             };
 
             CashMachine atm = new CashMachine();
-            string extension = "Xml";
-            ICassetteReader<List<Cassette>> cassetteReader = ReadersCollection.CassetteReaders[extension];
-            List<Cassette> cassettes = cassetteReader.ReadCassettes(ConfigurationManager.AppSettings["PathToMoney" + extension]);
+            string extension = "Txt";
+            ICassetteReader<List<Cassette>> cassetteReader;
+            cassetteReader = ReadersCollection.GetReader(extension);
+            List<Cassette> cassettes = cassetteReader.LoadCassettes(ConfigurationManager.AppSettings["PathToMoney" + extension]);
             atm.InsertCassettes(cassettes);
 
             while (atm.TotalMoney != 0)

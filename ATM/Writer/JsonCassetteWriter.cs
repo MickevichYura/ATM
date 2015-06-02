@@ -7,7 +7,7 @@ namespace ATM.Writer
     {
         public void WriteCassettes(T data, string fileName)
         {
-            Stream stream = new FileStream(fileName, FileMode.OpenOrCreate);
+            Stream stream = new FileStream(fileName, FileMode.Create);
             DataContractJsonSerializer ds = new DataContractJsonSerializer(typeof(T));
 
             ds.WriteObject(stream, data);

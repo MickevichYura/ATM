@@ -59,5 +59,14 @@ namespace AtmConsoleUI.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Choose Language.
+        /// </summary>
+        internal static string AtmMainForm_AtmMainForm_Choose_Language {
+            get {
+                return ResourceManager.GetString("AtmMainForm_AtmMainForm_Choose_Language", resourceCulture);
+            }
+        }
     }
 }

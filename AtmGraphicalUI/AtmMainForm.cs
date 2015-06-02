@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
-using System.Resources;
 using System.Threading;
 using System.Windows.Forms;
 using ATM;
@@ -19,7 +18,15 @@ namespace AtmConsoleUI
         {
             InitializeComponent();
             XmlConfigurator.Configure();
-            _languagePack = new LanguagePack("ru-RU");
+            comboBoxExtension.DataSource = (new[]
+            {
+                "Json",
+                "Xml",
+                "Txt",
+                "Csv"
+            });
+
+            _languagePack = new LanguagePack(CultureInfo.CurrentCulture.Name);
             LoadLang();
         }
 
@@ -32,13 +39,20 @@ namespace AtmConsoleUI
 
         private void LoadLang()
         {
-            _statesDictionary = new Dictionary<AtmState, string>()
+            _statesDictionary = new Dictionary<AtmState, string>
             {
                 {AtmState.Ok, _languagePack.Ok},
                 {AtmState.NotEnoughMoney, _languagePack.NotEnoughMoney},
                 {AtmState.ImpossibleToCollectMoney, _languagePack.ImpossibleToCollectMoney},
                 {AtmState.TooManyBanknotes, _languagePack.TooManyBanknotes}
             };
+
+            buttonInsertCassettes.Text = _languagePack.InsertCassettes;
+            buttonDeleteCassettes.Text = _languagePack.DeleteCassettes;
+            buttonCancel.Text = _languagePack.Cancel;
+            buttonClear.Text = _languagePack.Clear;
+            buttonEnter.Text = _languagePack.Enter;
+
         }
 
         private void DisplayMoney()
@@ -106,33 +120,18 @@ namespace AtmConsoleUI
             }
         }
 
-        private void buttonLoadCassettes_Click(object sender, EventArgs e)
+        private void buttonInsertCassettes_Click(object sender, EventArgs e)
         {
             listBoxMoney.Items.Clear();
             string pathToMoney = "PathToMoney";
+            string extension = comboBoxExtension.Text;
 
-            string userInput = textBoxCassettes.Text.ToLower().Trim();
-            string first = userInput[0].ToString().ToUpper();
-            userInput = userInput.Remove(0, 1);
-            userInput = userInput.Insert(0, first);
-            bool isLoaded = true;
-
-            try
+            _cassetteReader = ReadersCollection.GetReader(extension);
+            if (_cassetteReader != null)
             {
-                _cassetteReader = ReadersCollection.CassetteReaders[userInput];
-                pathToMoney += userInput;
-                List<Cassette> cassettes = _cassetteReader.ReadCassettes(ConfigurationManager.AppSettings[pathToMoney]);
-                Log.Info(string.Format("Cassettes are loaded successfully from \"{0}\"",
-                    ConfigurationManager.AppSettings[pathToMoney]));
+                pathToMoney += extension;
+                List<Cassette> cassettes = _cassetteReader.LoadCassettes(ConfigurationManager.AppSettings[pathToMoney]);
                 _atm.InsertCassettes(cassettes);
-            }
-            catch (KeyNotFoundException)
-            {
-                Log.Error("There is no such file with cassettes. Cassettes are not loaded");
-                isLoaded = false;
-            }
-            if (isLoaded)
-            {
                 DisplayMoney();
             }
         }
@@ -151,12 +150,14 @@ namespace AtmConsoleUI
         private void buttonLang_Click(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            if (button != null)
+            if (button != null && button.Text != Thread.CurrentThread.CurrentCulture.Name)
             {
                 string cultureInfo = button.Text;
                 _languagePack = new LanguagePack(cultureInfo);
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(cultureInfo);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(cultureInfo);
+                LoadLang();
+                Log.Info(string.Format("Culture changed to {0}", Thread.CurrentThread.CurrentCulture));
             }
         }
 
