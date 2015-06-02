@@ -57,6 +57,7 @@ namespace AtmConsoleUI
 
         private void DisplayMoney()
         {
+            listBoxMoney.Items.Clear();
             foreach (var nominal in _atm.AllMoney.Banknotes)
             {
                 listBoxMoney.Items.Add(string.Format("Banknote: {0}  " + "Amount: {1}", nominal.Key.Nominal,
@@ -97,23 +98,19 @@ namespace AtmConsoleUI
             {
                 MessageBox.Show(_languagePack.WrongInput);
             }
-
             var money = _atm.WithdrawMoney(requestedSum);
             switch (_atm.CurrentState)
             {
                 case AtmState.Ok:
                 {
-                    Log.Info(string.Format("State:{1}: {0}", MoneyConverter.ConvertToString(money),
-                        _statesDictionary[_atm.CurrentState]));
-                    listBoxMoney.Items.Clear();
-                    foreach (var nominal in _atm.AllMoney.Banknotes)
-                        DisplayMoney();
+                    DisplayMoney();
+                    //MoneyConverter.ConvertToString(issuedMoney)
+                    //MessageBox.Show(money.ToString());
                     break;
                 }
 
                 default:
                 {
-                    Log.Info(string.Format("State:{1}. User input {0}", readLine, _statesDictionary[_atm.CurrentState]));
                     MessageBox.Show(_statesDictionary[_atm.CurrentState]);
                     break;
                 }
@@ -131,20 +128,23 @@ namespace AtmConsoleUI
             {
                 pathToMoney += extension;
                 List<Cassette> cassettes = _cassetteReader.LoadCassettes(ConfigurationManager.AppSettings[pathToMoney]);
-                _atm.InsertCassettes(cassettes);
+                if (cassettes != null)
+                {
+                    _atm.InsertCassettes(cassettes);
+                }
                 DisplayMoney();
             }
-        }
-
-        private void AtmMainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Log.Info("Finish application " + e.CloseReason);
         }
 
         private void buttonDeleteCassettes_Click(object sender, EventArgs e)
         {
             _atm.DeleteCassettes();
             listBoxMoney.Items.Clear();
+        }
+
+        private void AtmMainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Log.Info("Finish application " + e.CloseReason);
         }
 
         private void buttonLang_Click(object sender, EventArgs e)

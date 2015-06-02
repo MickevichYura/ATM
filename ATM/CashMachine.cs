@@ -52,12 +52,16 @@ namespace ATM
             AtmState state;
             Money issuedMoney = new Money(algorithm.DecomposeMoney(AllMoney.Banknotes, requestedSum, out state));
             CurrentState = state;
-
             if (CurrentState == AtmState.Ok)
             {
                 UpdateMoney(issuedMoney);
+                Log.Info(string.Format("State: {0}. Issued money {1}", CurrentState,
+                    MoneyConverter.ConvertToString(issuedMoney)));
             }
-            //Log.Info(string.Format("State: {0}. Issued money {1}", CurrentState, issuedMoney));
+            else
+            {
+                Log.Info(string.Format("State: {0}. Issued money 0", CurrentState));
+            }
             return issuedMoney;
         }
 
@@ -71,7 +75,7 @@ namespace ATM
 
         public void Serialize(string filename)
         {
-            Log.Info(string.Format("Start serialization to {0}", filename));
+            Log.Info("Start serialization");
             Stream fileStream = Stream.Null;
             try
             {
@@ -89,7 +93,7 @@ namespace ATM
 
         public static CashMachine Deserialize(string filename)
         {
-            Log.Info(string.Format("Start deserialization from {0}", filename));
+            Log.Info("Start deserialization");
             Stream fileStream = Stream.Null;
             try
             {
