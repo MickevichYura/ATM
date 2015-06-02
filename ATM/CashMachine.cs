@@ -91,6 +91,12 @@ namespace ATM
             }
         }
 
+        public void Exit()
+        {
+            Log.Debug("CashMashine session finished");
+            Environment.Exit(1);
+        }
+
         public static CashMachine Deserialize(string filename)
         {
             Log.Info("Start deserialization");

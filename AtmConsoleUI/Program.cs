@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using ATM;
 using ATM.Language;
-using ATM.Reader;
-using ATM.Writer;
 using log4net;
 using log4net.Config;
 
@@ -14,7 +11,9 @@ namespace AtmConsoleUI
 
     public static class Program
     {
-        public static readonly ILog Log = LogManager.GetLogger(typeof (Program));
+        private static readonly ILog Log = LogManager.GetLogger(typeof (Program));
+
+        private static CashMachine _atm;
 
         private static void Main()
         {
@@ -31,50 +30,40 @@ namespace AtmConsoleUI
                 {AtmState.TooManyBanknotes, languagePack.TooManyBanknotes}
             };
 
-            CashMachine atm = new CashMachine();
-            string extension = "Txt";
-            ICassetteReader<List<Cassette>> cassetteReader;
-            cassetteReader = ReadersCollection.GetReader(extension);
-            List<Cassette> cassettes = cassetteReader.LoadCassettes(ConfigurationManager.AppSettings["PathToMoney" + extension]);
-            atm.InsertCassettes(cassettes);
+            _atm = CashMachine.Deserialize(ConfigurationManager.AppSettings["SerializationFile"]) ?? new CashMachine();
 
-            while (atm.TotalMoney != 0)
+            CommandPerformer commandPerformer = new CommandPerformer(ref _atm, ref languagePack);
+
+            while (true)
             {
-                Console.WriteLine(atm.TotalMoney);
+                Console.WriteLine(_atm.TotalMoney);
                 var readLine = Console.ReadLine();
 
                 decimal requestedSum;
-                if (!decimal.TryParse(readLine, out requestedSum) || requestedSum <= decimal.Zero)
-                {
-                    if (readLine.Equals("exit", StringComparison.OrdinalIgnoreCase))
-                    {
-                        break;
-                    }
 
-                    Console.WriteLine(languagePack.WrongInput);
+                if (decimal.TryParse(readLine, out requestedSum) && requestedSum > decimal.Zero)
+                {
+                    var money = _atm.WithdrawMoney(requestedSum);
+                    switch (_atm.CurrentState)
+                    {
+                        case AtmState.Ok:
+                            {
+                                Console.WriteLine(MoneyConverter.ConvertToString(money));
+                                break;
+                            }
+                        default:
+                            Console.WriteLine(statesDictionary[_atm.CurrentState]);
+                            break;
+                    }
                     continue;
                 }
+                bool isCommand = readLine != null && commandPerformer.TryPerform(readLine.Trim().ToLower());
 
-                var money = atm.WithdrawMoney(requestedSum);
-                switch (atm.CurrentState)
+                if (!isCommand)
                 {
-                    case AtmState.Ok:
-                    {
-                        Console.WriteLine(MoneyConverter.ConvertToString(money));
-                        break;
-                    }
-                    default:
-                        Console.WriteLine(statesDictionary[atm.CurrentState]);
-                        break;
+                    Console.WriteLine(languagePack.WrongInput);
                 }
-            }
 
-            List<Cassette> newCassettes =
-                atm.AllMoney.Banknotes.Select(cassette => new Cassette(cassette.Key, cassette.Value)).ToList();
-
-            foreach (var cassetteWriter in WritersCollection.CassetteWriters)
-            {
-                cassetteWriter.Value.WriteCassettes(newCassettes, ConfigurationManager.AppSettings["PathToMoney" + cassetteWriter.Key]);
             }
         }
        

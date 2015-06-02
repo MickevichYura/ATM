@@ -19,6 +19,13 @@ namespace ATM.Reader
 
         public static ICassetteReader<List<Cassette>> GetReader(string extension)
         {
+            string userInput = extension.ToLower().Trim();
+            string first = userInput[0].ToString().ToUpper();
+            //userInput = userInput.Remove(0, 1);
+            //userInput = userInput.Insert(0, first);
+
+            extension = extension.Replace(extension[0], first[0]);
+
             ICassetteReader<List<Cassette>> cassetteReader = null;
             try
             {
