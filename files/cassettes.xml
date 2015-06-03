@@ -1,0 +1,20 @@
+<ArrayOfCassette xmlns="http://schemas.datacontract.org/2004/07/ATM" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+  <Cassette>
+    <Banknote>
+      <Nominal>100</Nominal>
+    </Banknote>
+    <Number>10</Number>
+  </Cassette>
+  <Cassette>
+    <Banknote>
+      <Nominal>20</Nominal>
+    </Banknote>
+    <Number>9</Number>
+  </Cassette>
+  <Cassette>
+    <Banknote>
+      <Nominal>5</Nominal>
+    </Banknote>
+    <Number>5</Number>
+  </Cassette>
+</ArrayOfCassette>
