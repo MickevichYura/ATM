@@ -37,7 +37,7 @@ namespace AtmConsoleUI
 
             while (true)
             {
-                Console.WriteLine(_atm.TotalMoney);
+                Console.WriteLine("\n" + _atm.TotalMoney);
                 var readLine = Console.ReadLine();
 
                 decimal requestedSum;

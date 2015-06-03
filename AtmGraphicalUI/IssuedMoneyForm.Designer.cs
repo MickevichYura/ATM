@@ -45,11 +45,12 @@
             this.ColumnNumber});
             this.dataGridViewMoney.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewMoney.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewMoney.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridViewMoney.Name = "dataGridViewMoney";
             this.dataGridViewMoney.ReadOnly = true;
             this.dataGridViewMoney.RowHeadersWidth = 5;
             this.dataGridViewMoney.RowTemplate.Height = 24;
-            this.dataGridViewMoney.Size = new System.Drawing.Size(207, 147);
+            this.dataGridViewMoney.Size = new System.Drawing.Size(206, 119);
             this.dataGridViewMoney.TabIndex = 0;
             // 
             // ColumnNominal
@@ -68,11 +69,12 @@
             // 
             // IssuedMoneyForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(207, 147);
+            this.ClientSize = new System.Drawing.Size(206, 119);
             this.Controls.Add(this.dataGridViewMoney);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "IssuedMoneyForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
